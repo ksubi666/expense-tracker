@@ -10,49 +10,54 @@ const port = 8000;
 
 app.use(bodyParser.json())
 app.use(cors())
-
-app.get('/',async (req,res)=>{
-   const tableQueryText = `
-  CREATE TABLE IF NOT EXISTS "users" (
-    email VARCHAR(50) UNIQUE NOT NULL,
+// createTable
+app.get('/createTable',async (req,res)=>{
+   const tableQueryText = `  
+   CREATE TABLE IF NOT EXISTS "users" (
+    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(50)  NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL, 
     password TEXT,
-    avatar_img VARCHAR(50) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedAt TIMESTAMP,
-    currency_type TEXT DEFAULT ‘MNT’
-  )`;
+    avatar_img BYTEA,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    currency_type currency_type DEFAULT 'MNT' NOT NULL
+  )
+`;
   try {
     await db.query(tableQueryText)
   } catch (error) {
       console.error(error)
   }
-res.send('saccess')
+res.send('createTable')
 })
-// app.get('/createUser',async (req,res)=>{
-//    const tableQueryText = `
-// INSERT INTO users (name,email)
-// VALUES ('Sukh', 'Sukh@gmail.com')
-//   `;
-//   try {
-//     await db.query(tableQueryText)
-//   } catch (error) {
-//       console.error(error)
-//   }
-// res.send('create user')
-// })
-app.get('/getUser',async (req,res)=>{
+// createUser
+app.post('/users/create',async (req,res)=>{
+  const {name, email, password , avatar_img , currency_type } =req.body
    const tableQueryText = `
-SELECT * from users
+INSERT INTO users (name, email, password ,avatar_img, currency_type )
+VALUES ($1,$2,$3,$4,$5) RETURNING *
   `;
   try {
-    const users = await db.query(tableQueryText)
-    res.send(users.rows)
+    await db.query(tableQueryText,[name, email, password ,avatar_img, currency_type])
   } catch (error) {
       console.error(error)
   }
-res.send('get user')
+res.send('create user')
 })
+// Users
+// app.get('/getUser',async (req,res)=>{
+//    const tableQueryText = `
+// SELECT * from users
+//   `;
+//   try {
+//     const users = await db.query(tableQueryText)
+//     res.send(users.rows)
+//   } catch (error) {
+//       console.error(error)
+//   }
+// res.send('get user')
+// })
 app.listen(port,()=>{
   console.log(`Example app listening on port ${port}`)
 })
