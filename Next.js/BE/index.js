@@ -46,18 +46,34 @@ VALUES ($1,$2,$3,$4,$5) RETURNING *
 res.send('create user')
 })
 // Users
-// app.get('/getUser',async (req,res)=>{
-//    const tableQueryText = `
-// SELECT * from users
-//   `;
-//   try {
-//     const users = await db.query(tableQueryText)
-//     res.send(users.rows)
-//   } catch (error) {
-//       console.error(error)
-//   }
-// res.send('get user')
-// })
+app.get('/users',async (req,res)=>{
+   const tableQueryText = `
+SELECT * from users
+  `;
+  try {
+    const users = await db.query(tableQueryText)
+    res.send(users.rows)
+  } catch (error) {
+      console.error(error)
+  }
+  // 
+res.send('get all users')
+})
+// Users/id UPDATE
+app.put('/users/:id',async (req,res)=>{
+  const {id}=req.params
+  const {name ,email}=req.body
+
+   const tableQueryText = `
+UPDATE users SET name = $1, email = $2 WHERE  id = $3 RETURNING *
+  `;
+  try {
+    const users = await db.query(tableQueryText,[name ,email,id])
+    res.send(users.rows)
+  } catch (error) {
+      console.error(error)
+  }
+})
 app.listen(port,()=>{
   console.log(`Example app listening on port ${port}`)
 })
