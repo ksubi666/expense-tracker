@@ -56,8 +56,6 @@ SELECT * from users
   } catch (error) {
       console.error(error)
   }
-  // 
-res.send('get all users')
 })
 // Users/id UPDATE
 app.put('/users/:id',async (req,res)=>{
@@ -69,6 +67,19 @@ UPDATE users SET name = $1, email = $2 WHERE  id = $3 RETURNING *
   `;
   try {
     const users = await db.query(tableQueryText,[name ,email,id])
+    res.send(users.rows)
+  } catch (error) {
+      console.error(error)
+  }
+})
+// delete user 
+app.delete('/users/:id',async (req,res)=>{
+  const {id}=req.params
+   const tableQueryText = `
+DELETE FROM users WHERE  id = $1 RETURNING *
+  `;
+  try {
+    const users = await db.query(tableQueryText,[id])
     res.send(users.rows)
   } catch (error) {
       console.error(error)
