@@ -86,7 +86,6 @@ DELETE FROM users WHERE  id = $1 RETURNING *
   }
 })
 // ***********************************
-
 // Record Table
 app.get('/recordTable',async (req,res)=>{
    const tableQueryText = `  
@@ -138,13 +137,13 @@ SELECT * from records
 //records/id UPDATE
 app.put('/records/:id',async (req,res)=>{
   const {id}=req.params
-  const {name, amount , description}=req.body
+  const {name, amount ,transaction_type, description}=req.body
 
    const tableQueryText = `
-UPDATE records SET name = $1, amount = $2, description = $3 WHERE  id = $4 RETURNING *
+UPDATE records SET name = $1, amount = $2, transaction_type = $3 ,description = $4 WHERE  id = $5 RETURNING *
   `;
   try {
-    const records = await db.query(tableQueryText,[name, amount , description,id])
+    const records = await db.query(tableQueryText,[name, amount , transaction_type , description,id])
     res.send(records.rows)
   } catch (error) {
       console.error(error)
@@ -154,7 +153,7 @@ UPDATE records SET name = $1, amount = $2, description = $3 WHERE  id = $4 RETUR
 app.delete('/records/:id',async (req,res)=>{
   const {id}=req.params
    const tableQueryText = `
-DELETE FROM records WHERE  id = $1 RETURNING *
+DELETE FROM records WHERE id = $1 RETURNING *
   `;
   try {
     const records = await db.query(tableQueryText,[id])
@@ -163,15 +162,12 @@ DELETE FROM records WHERE  id = $1 RETURNING *
       console.error(error)
   }
 })
-
-
-
 // ***********************************
 // CREATE categoryTable
 app.get('/categoryTable',async (req,res)=>{
    const tableQueryText = `  
    CREATE TABLE IF NOT EXISTS "category" (
-    id TEXT,
+    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(50)  NOT NULL,
     description TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -215,7 +211,7 @@ SELECT * from category
 //category/id UPDATE
 app.put('/category/:id',async (req,res)=>{
   const {id}=req.params
-  const {name ,email}=req.body
+  const {name, description ,category_image}=req.body
 
    const tableQueryText = `
 UPDATE category SET name = $1, description = $2 ,category_image = $3 WHERE  id = $4 RETURNING *
