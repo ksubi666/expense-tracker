@@ -11,7 +11,7 @@ VALUES ($1,$2,$3) RETURNING *
   } catch (error) {
       console.error(error)
   }
-res.send('CREATE CATEGORY TABLE USER')
+res.send('CREATE CATEGORY')
 }
 export const categories = async (req,res)=>{
    const tableQueryText = `

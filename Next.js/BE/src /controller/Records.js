@@ -11,7 +11,7 @@ VALUES ($1,$2,$3,$4) RETURNING *
   } catch (error) {
       console.error(error)
   }
-res.send('CREATE RECORD TABLE USER')
+res.send('CREATE RECORD')
 }
 export const records = async (req,res)=>{
    const tableQueryText = `
