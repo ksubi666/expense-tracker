@@ -3,6 +3,6 @@ import { createUser, userDelete, users, userUpdate } from '../controller/Users.j
 
 const user = express.Router()
 
-user.get('/', users).post('/create',createUser).put('/:id',userUpdate).delete('/:id',userDelete)
+user.get('/:id', users).post('/create',createUser).put('/:id',userUpdate).delete('/:id',userDelete)
 
 export {user}

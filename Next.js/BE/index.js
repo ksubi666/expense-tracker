@@ -16,6 +16,8 @@ app.use(cors())
 app.use('/user',user)
 app.use('/record',record)
 app.use('/category',category)
+
+
 // create userTable
 app.get('/createTable',async (req,res)=>{
    const tableQueryText = `  
@@ -78,6 +80,8 @@ app.get('/categoryTable',async (req,res)=>{
   }
 res.send('CREATED CATEGORY TABLE')
 })
+
+
 app.listen(port,()=>{
   console.log(`Port ${port}`)
 })

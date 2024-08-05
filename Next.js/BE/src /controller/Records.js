@@ -14,11 +14,13 @@ VALUES ($1,$2,$3,$4) RETURNING *
 res.send('CREATE RECORD')
 }
 export const records = async (req,res)=>{
+      const {id}=req.params
    const tableQueryText = `
-SELECT * from records
+   SELECT * from records
+   WHERE id = $1
   `;
   try {
-    const users = await db.query(tableQueryText)
+    const users = await db.query(tableQueryText,[id])
     res.send(users.rows)
   } catch (error) {
       console.error(error)

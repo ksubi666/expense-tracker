@@ -3,6 +3,6 @@ import { categories, categoryDelete, categoryUpdate, createCategory } from '../c
 
 const category = express.Router()
 
-category.get('/', categories).post('/create',createCategory).put('/:id',categoryUpdate).delete('/:id',categoryDelete)
+category.get('/:id', categories).post('/create',createCategory).put('/:id',categoryUpdate).delete('/:id',categoryDelete)
 
 export {category}
