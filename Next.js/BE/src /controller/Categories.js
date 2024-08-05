@@ -14,6 +14,17 @@ VALUES ($1,$2,$3) RETURNING *
 res.send('CREATE CATEGORY')
 }
 export const categories = async (req,res)=>{
+   const tableQueryText = `
+   SELECT * from category
+  `;
+  try {
+    const category = await db.query(tableQueryText)
+    res.send(category.rows)
+  } catch (error) {
+      console.error(error)
+  }
+}
+export const Category = async (req,res)=>{
     const {id}=req.params
    const tableQueryText = `
    SELECT * from category

@@ -14,6 +14,18 @@ VALUES ($1,$2,$3,$4,$5) RETURNING *
 res.send('CREATE user')
 }
 export const users = async (req,res)=>{
+  const tableQueryText = `
+  SELECT * from users
+
+  `;
+  try {
+    const users = await db.query(tableQueryText)
+    res.send(users.rows)
+  } catch (error) {
+      console.error(error)
+  }
+}
+export const User = async (req,res)=>{
   const {id}=req.params
   const tableQueryText = `
   SELECT * from users
