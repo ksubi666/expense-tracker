@@ -13,6 +13,7 @@ const port = 8000;
 
 app.use(bodyParser.json())
 app.use(cors())
+
 app.use('/user',user)
 app.use('/record',record)
 app.use('/category',category)
