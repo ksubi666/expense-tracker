@@ -6,6 +6,7 @@ import { db } from './db.js'
 import { user } from './src /router/user.js'
 import { record } from './src /router/record.js'
 import { category } from './src /router/category.js'
+import { auth} from './src /router/auth.js'
 
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(cors())
 app.use('/user',user)
 app.use('/record',record)
 app.use('/category',category)
+app.use('/Api',auth)
 
 
 // create userTable

@@ -1,13 +1,13 @@
 import {db}from "../../db.js"
 
 export const createUser = async (req,res)=>{
-  const {name, email, password , avatar_img , currency_type } =req.body
+  const {name, email, password , avatar_img  } =req.body
    const tableQueryText = `
-INSERT INTO users (name, email, password ,avatar_img, currency_type )
-VALUES ($1,$2,$3,$4,$5) RETURNING *
+INSERT INTO users (name, email, password ,avatar_img )
+VALUES ($1,$2,$3,$4) RETURNING *
   `;
   try {
-    await db.query(tableQueryText,[name, email, password ,avatar_img, currency_type])
+    await db.query(tableQueryText,[name, email, password ,avatar_img])
   } catch (error) {
       console.error(error)
   }
@@ -26,14 +26,14 @@ export const users = async (req,res)=>{
   }
 }
 export const User = async (req,res)=>{
-  const {id}=req.params
+  const {email}=req.params
   const tableQueryText = `
   SELECT * from users
-  WHERE id = $1
+  WHERE email = $1
   `;
   try {
-    const users = await db.query(tableQueryText,[id])
-    res.send(users.rows)
+    const users = await db.query(tableQueryText,[email])
+    return res.send(users.rows)
   } catch (error) {
       console.error(error)
   }
