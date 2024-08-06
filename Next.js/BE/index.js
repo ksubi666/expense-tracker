@@ -45,14 +45,16 @@ app.get('/recordTable',async (req,res)=>{
    const tableQueryText = `  
    CREATE TABLE IF NOT EXISTS "records" (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id TEXT,
+    user_id uuid,
     name VARCHAR(50)  NOT NULL,
     amount REAL NOT NULL, 
     transaction_type transaction_type DEFAULT 'INC' NOT NULL,
     description TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    category_id TEXT
+    category_id uuid,
+    FOREIGN KEY (user_id) REFERENCES users(id) ,
+    FOREIGN KEY (category_id) REFERENCES category(id)
   )
 `;
   try {

@@ -1,13 +1,13 @@
 import {db}from "../../db.js"
 
 export const createRecord = async (req,res)=>{
-  const {name, amount ,transaction_type ,description } =req.body
+  const {user_id,name, amount ,transaction_type ,description,category_id } =req.body
    const tableQueryText = `
-INSERT INTO records (name, amount ,transaction_type,description )
-VALUES ($1,$2,$3,$4) RETURNING *
+INSERT INTO records (user_id,name, amount ,transaction_type,description,category_id )
+VALUES ($1,$2,$3,$4,$5,$6) RETURNING *
   `;
   try {
-    await db.query(tableQueryText,[name, amount ,transaction_type,description])
+    await db.query(tableQueryText,[user_id,name, amount ,transaction_type,description,category_id])
   } catch (error) {
       console.error(error)
   }
