@@ -1,4 +1,4 @@
-import { createUser, User } from './Users.js'
+import { createUser, User, users } from './Users.js'
 
 export const Signup = async(req,res)=>{
   try { 

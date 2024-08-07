@@ -26,14 +26,14 @@ export const users = async (req,res)=>{
   }
 }
 export const User = async (req,res)=>{
-  const {email}=req.params
+  const {email , id}=req.body
   const tableQueryText = `
   SELECT * from users
-  WHERE email = $1
+  WHERE email = $1 OR id =$2
   `;
   try {
-    const users = await db.query(tableQueryText,[email])
-    return res.send(users.rows)
+    const users = await db.query(tableQueryText,[email,id])
+    return users.rows
   } catch (error) {
       console.error(error)
   }
