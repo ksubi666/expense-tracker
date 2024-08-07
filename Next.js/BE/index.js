@@ -3,10 +3,10 @@ import express from "express"
 import fs from "node:fs"
 import cors from 'cors'
 import { db } from './db.js'
-import { user } from './src /router/user.js'
-import { record } from './src /router/record.js'
-import { category } from './src /router/category.js'
-import { auth} from './src /router/auth.js'
+import { user } from './src/router/user.js'
+import { record } from './src/router/record.js'
+import { category } from './src/router/category.js'
+import { auth} from './src/router/auth.js'
 
 
 const app = express()
