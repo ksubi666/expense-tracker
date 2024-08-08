@@ -1,4 +1,5 @@
 import {db}from "../../db.js"
+import bcrypt from 'bcrypt'
 
 export const createUser = async (req,res)=>{
   const {name, email, password , avatar_img  } =req.body
@@ -6,8 +7,11 @@ export const createUser = async (req,res)=>{
 INSERT INTO users (name, email, password ,avatar_img )
 VALUES ($1,$2,$3,$4) RETURNING *
   `;
+  const saltRounds = 10;
   try {
-    await db.query(tableQueryText,[name, email, password ,avatar_img])
+      bcrypt.hash(password, saltRounds,async (err, hash)=> {
+await db.query(tableQueryText,[name, email, hash ,avatar_img])
+});
   } catch (error) {
       console.error(error)
   }
