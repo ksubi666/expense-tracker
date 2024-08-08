@@ -7,15 +7,15 @@ export const createUser = async (req,res)=>{
 INSERT INTO users (name, email, password ,avatar_img )
 VALUES ($1,$2,$3,$4) RETURNING *
   `;
-  const saltRounds = 10;
+const saltRounds = Number(process.env.SALTROUNDS);
   try {
       bcrypt.hash(password, saltRounds,async (err, hash)=> {
 await db.query(tableQueryText,[name, email, hash ,avatar_img])
 });
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
-res.send('CREATE user')
+return res.send('CREATE USER')
 }
 export const users = async (req,res)=>{
   const tableQueryText = `
@@ -24,9 +24,9 @@ export const users = async (req,res)=>{
   `;
   try {
     const users = await db.query(tableQueryText)
-    res.send(users.rows)
+    return res.send(users.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const User = async (req,res)=>{
@@ -39,7 +39,7 @@ export const User = async (req,res)=>{
     const users = await db.query(tableQueryText,[email,id])
     return users.rows
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const userUpdate = async (req,res)=>{
@@ -51,9 +51,9 @@ UPDATE users SET name = $1, email = $2 WHERE  id = $3 RETURNING *
   `;
   try {
     const users = await db.query(tableQueryText,[name ,email,id])
-    res.send(users.rows)
+    return res.send(users.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const userDelete = async (req,res)=>{
@@ -63,8 +63,8 @@ DELETE FROM users WHERE  id = $1 RETURNING *
   `;
   try {
     const users = await db.query(tableQueryText,[id])
-    res.send(users.rows)
+    return res.send(users.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }

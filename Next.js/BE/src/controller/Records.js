@@ -19,9 +19,9 @@ export const records = async (req,res)=>{
   `;
   try {
     const users = await db.query(tableQueryText)
-    res.send(users.rows)
+    return res.send(users.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const Record = async (req,res)=>{
@@ -32,9 +32,9 @@ export const Record = async (req,res)=>{
   `;
   try {
     const users = await db.query(tableQueryText,[id])
-    res.send(users.rows)
+    return res.send(users.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const recordUpdate = async (req,res)=>{
@@ -46,9 +46,9 @@ UPDATE records SET name = $1, amount = $2, transaction_type = $3 ,description = 
   `;
   try {
     const records = await db.query(tableQueryText,[name, amount , transaction_type , description,id])
-    res.send(records.rows)
+    return res.send(records.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const recordDelete = async (req,res)=>{
@@ -58,8 +58,8 @@ DELETE FROM records WHERE id = $1 RETURNING *
   `;
   try {
     const records = await db.query(tableQueryText,[id])
-    res.send(records.rows)
+    return res.send(records.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }

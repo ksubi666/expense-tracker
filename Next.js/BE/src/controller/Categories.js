@@ -9,9 +9,9 @@ VALUES ($1,$2,$3) RETURNING *
   try {
     await db.query(tableQueryText,[name, description ,category_image])
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
-res.send('CREATE CATEGORY')
+return res.send('CREATE CATEGORY')
 }
 export const categories = async (req,res)=>{
    const tableQueryText = `
@@ -19,9 +19,9 @@ export const categories = async (req,res)=>{
   `;
   try {
     const category = await db.query(tableQueryText)
-    res.send(category.rows)
+   return res.send(category.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const Category = async (req,res)=>{
@@ -32,9 +32,9 @@ export const Category = async (req,res)=>{
   `;
   try {
     const category = await db.query(tableQueryText,[id])
-    res.send(category.rows)
+    return res.send(category.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }
 export const categoryUpdate = async (req,res)=>{
@@ -46,9 +46,9 @@ UPDATE category SET name = $1, description = $2 ,category_image = $3 WHERE  id =
   `;
   try {
     const category = await db.query(tableQueryText,[name, description ,category_image,id])
-    res.send(category.rows)
+    return res.send(category.rows)
   } catch (error) {
-      console.error(error)
+       return res.send(error)
   }
 }
 export const categoryDelete = async (req,res)=>{
@@ -58,8 +58,8 @@ DELETE FROM category WHERE  id = $1 RETURNING *
   `;
   try {
     const category = await db.query(tableQueryText,[id])
-    res.send(category.rows)
+    return res.send(category.rows)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
 }

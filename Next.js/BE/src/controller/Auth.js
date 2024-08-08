@@ -5,21 +5,22 @@ export const Signup = async(req,res)=>{
   try { 
     await createUser(req,res)
   } catch (error) {
-    console.log(error)
+      return res.send(error)
   }
 }
 export const Singin = async(req,res)=>{
   const {password,email}=req.body
   try {
-        const user =  await User(req,res)
+      const user =  await User(req,res)
       bcrypt.compare(password, user[0].password,(err, result)=> {
-  if (true) {
-      res.send({success:true, user:user})
+        console.log(result)
+  if (result === true) {
+      return res.send({success:true})
     } else {
-      res.send({error:'Invalid email or password'})
+      return res.send({error:'Invalid email or password'})
     }
 });
   } catch (error) {
-    console.log(error)
+  return res.send(error)
   }
 }

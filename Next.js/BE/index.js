@@ -1,6 +1,5 @@
 import bodyParser from "body-parser"
 import express from "express"
-import fs from "node:fs"
 import cors from 'cors'
 import { db } from './db.js'
 import { user } from './src/router/user.js'
@@ -8,9 +7,8 @@ import { record } from './src/router/record.js'
 import { category } from './src/router/category.js'
 import { auth} from './src/router/auth.js'
 
-
 const app = express()
-const port = 8000;
+const PORT = process.env.PORT;
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -38,9 +36,9 @@ app.get('/createTable',async (req,res)=>{
   try {
     await db.query(tableQueryText)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
-res.send('CREATED USERS TABLE')
+return res.send('CREATED USERS TABLE')
 })
 // create recordTable
 app.get('/recordTable',async (req,res)=>{
@@ -62,9 +60,9 @@ app.get('/recordTable',async (req,res)=>{
   try {
     await db.query(tableQueryText)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
-res.send('CREATED RECORDS TABLE')
+return res.send('CREATED RECORDS TABLE')
 })
 // create categoryTable
 app.get('/categoryTable',async (req,res)=>{
@@ -81,12 +79,12 @@ app.get('/categoryTable',async (req,res)=>{
   try {
     await db.query(tableQueryText)
   } catch (error) {
-      console.error(error)
+        return res.send(error)
   }
-res.send('CREATED CATEGORY TABLE')
+return res.send('CREATED CATEGORY TABLE')
 })
 
 
-app.listen(port,()=>{
-  console.log(`Port ${port}`)
+app.listen(PORT,()=>{
+  console.log(`Port ${PORT}`)
 })
