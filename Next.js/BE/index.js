@@ -55,8 +55,8 @@ app.get('/recordTable',async (req,res)=>{
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     category_id uuid,
-    FOREIGN KEY (user_id) REFERENCES users(id) ,
-    FOREIGN KEY (category_id) REFERENCES category(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
   )
 `;
   try {
