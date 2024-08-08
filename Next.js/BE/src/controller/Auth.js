@@ -13,9 +13,8 @@ export const Singin = async(req,res)=>{
   try {
       const user =  await User(req,res)
       bcrypt.compare(password, user[0].password,(err, result)=> {
-        console.log(result)
   if (result === true) {
-      return res.send({success:true})
+      return res.send({success:true,Login:user[0]})
     } else {
       return res.send({error:'Invalid email or password'})
     }
