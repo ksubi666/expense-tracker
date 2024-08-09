@@ -4,18 +4,5 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [res, setRes] = useState("hehe");
-  // useEffect(() => {
-  //   axios.get("http://localhost:8000/categories").then((response) => {
-  //     console.log("success");
-  //     console.log(response.data);
-  //     setRes(response.data);
-  //   });
-  // }, []);
-
-  return (
-    <main className="flex justify-center items-center">
-      <Button variant="outline">{res}</Button>
-    </main>
-  );
+  return <main className="flex justify-center items-center"></main>;
 }
