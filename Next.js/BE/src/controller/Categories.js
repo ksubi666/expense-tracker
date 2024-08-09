@@ -63,3 +63,16 @@ DELETE FROM category WHERE  id = $1 RETURNING *
         return res.send(error)
   }
 }
+export const filterCategory = async (req,res)=>{
+   const {name,description,id}=req.body
+   const tableQueryText = `
+   SELECT * from category
+   WHERE name = $1 OR description = $2 OR id = $3 
+  `;
+  try {
+    const users = await db.query(tableQueryText,[name,description,id])
+    return res.send(users.rows)
+  } catch (error) {
+        return res.send(error)
+  }
+}

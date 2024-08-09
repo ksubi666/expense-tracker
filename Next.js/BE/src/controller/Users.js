@@ -43,6 +43,19 @@ export const User = async (req,res)=>{
         return res.send(error)
   }
 }
+export const filterUser = async (req,res)=>{
+   const {name,email,id}=req.body
+   const tableQueryText = `
+   SELECT * from users
+   WHERE name = $1 OR email = $2 OR id = $3 
+  `;
+  try {
+    const users = await db.query(tableQueryText,[name,email,id])
+    return res.send(users.rows)
+  } catch (error) {
+        return res.send(error)
+  }
+}
 export const GetUser = async (req,res)=>{
   const {id}=req.params
    const tableQueryText = `
