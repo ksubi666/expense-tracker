@@ -1,4 +1,4 @@
-import { createUser, User, users } from './Users.js';
+import { createUser, User } from './usersController.js';
 import bcrypt from 'bcrypt';
 
 export const Signup = async (req, res) => {

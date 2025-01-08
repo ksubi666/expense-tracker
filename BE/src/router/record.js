@@ -7,7 +7,7 @@ import {
   RecordPieChart,
   records,
   recordUpdate,
-} from '../controller/Records.js';
+} from '../controller/recordsController.js';
 
 const record = express.Router();
 
