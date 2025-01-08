@@ -15,7 +15,7 @@ export * from './GiftIcon';
 export * from './HouseIcon';
 export * from './Leading';
 export * from './ListLogo';
-export * from './logoIcon';
+export * from './LogoIcon';
 export * from './LogoWhite';
 export * from './PlusIcon';
 export * from './ShoppingIcon';
