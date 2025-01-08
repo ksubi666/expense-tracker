@@ -1,8 +1,9 @@
-import { Inter } from "next/font/google";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import SigninPage from './sign-in';
 
 export default function Home() {
-  return <main className="flex justify-center items-center"></main>;
+  return (
+    <main>
+      <SigninPage />
+    </main>
+  );
 }

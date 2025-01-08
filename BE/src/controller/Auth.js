@@ -1,25 +1,25 @@
-import { createUser, User, users } from './Users.js'
-import bcrypt from 'bcrypt'
+import { createUser, User, users } from './Users.js';
+import bcrypt from 'bcrypt';
 
-export const Signup = async(req,res)=>{
-  try { 
-    await createUser(req,res)
-  } catch (error) {
-      return res.send(error)
-  }
-}
-export const Singin = async(req,res)=>{
-  const {password,email}=req.body
+export const Signup = async (req, res) => {
   try {
-      const user =  await User(req,res)
-      bcrypt.compare(password, user[0].password,(err, result)=> {
-  if (result === true) {
-      return res.send({success:true,Login:user[0]})
-    } else {
-      return res.send({error:'Invalid email or password'})
-    }
-});
+    await createUser(req, res);
   } catch (error) {
-  return res.send(error)
+    return res.send(error);
   }
-}
+};
+export const Singin = async (req, res) => {
+  const { password, email } = req.body;
+  try {
+    const user = await User(req, res);
+    bcrypt.compare(password, user[0].password, (err, result) => {
+      if (result === true) {
+        return res.send({ success: true, user: user[0] });
+      } else {
+        return res.send({ error: 'Invalid email or password' });
+      }
+    });
+  } catch (error) {
+    return res.send({ error, success: false });
+  }
+};
