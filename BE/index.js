@@ -1,27 +1,32 @@
-import bodyParser from "body-parser"
-import express from "express"
-import cors from 'cors'
-import { db } from './db.js'
-import { user } from './src/router/user.js'
-import { record } from './src/router/record.js'
-import { category } from './src/router/category.js'
-import { auth} from './src/router/auth.js'
+import bodyParser from 'body-parser';
+import express from 'express';
+import cors from 'cors';
+import { db } from './db.js';
+import { user } from './src/router/user.js';
+import { record } from './src/router/record.js';
+import { category } from './src/router/category.js';
+import { auth } from './src/router/auth.js';
 
-const app = express()
+const app = express();
 const PORT = process.env.PORT;
 
-app.use(bodyParser.json())
-app.use(cors())
+app.use(bodyParser.json());
+app.use(
+  cors({
+    credentials: true,
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  })
+);
 
-app.use('/user',user)
-app.use('/record',record)
-app.use('/category',category)
-app.use('/Api',auth)
-
+app.use('/user', user);
+app.use('/record', record);
+app.use('/category', category);
+app.use('/Api', auth);
 
 // create userTable
-app.get('/createTable',async (req,res)=>{
-   const tableQueryText = `  
+app.get('/createTable', async (req, res) => {
+  const tableQueryText = `  
    CREATE TABLE IF NOT EXISTS "users" (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(50)  NOT NULL,
@@ -34,15 +39,15 @@ app.get('/createTable',async (req,res)=>{
   )
 `;
   try {
-    await db.query(tableQueryText)
+    await db.query(tableQueryText);
   } catch (error) {
-        return res.send(error)
+    return res.send(error);
   }
-return res.send('CREATED USERS TABLE')
-})
+  return res.send('CREATED USERS TABLE');
+});
 // create recordTable
-app.get('/recordTable',async (req,res)=>{
-   const tableQueryText = `  
+app.get('/recordTable', async (req, res) => {
+  const tableQueryText = `  
    CREATE TABLE IF NOT EXISTS "records" (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id uuid,
@@ -58,15 +63,15 @@ app.get('/recordTable',async (req,res)=>{
   )
 `;
   try {
-    await db.query(tableQueryText)
+    await db.query(tableQueryText);
   } catch (error) {
-        return res.send(error)
+    return res.send(error);
   }
-return res.send('CREATED RECORDS TABLE')
-})
+  return res.send('CREATED RECORDS TABLE');
+});
 // create categoryTable
-app.get('/categoryTable',async (req,res)=>{
-   const tableQueryText = `  
+app.get('/categoryTable', async (req, res) => {
+  const tableQueryText = `  
    CREATE TABLE IF NOT EXISTS "category" (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(50)  NOT NULL,
@@ -77,14 +82,13 @@ app.get('/categoryTable',async (req,res)=>{
   )
 `;
   try {
-    await db.query(tableQueryText)
+    await db.query(tableQueryText);
   } catch (error) {
-        return res.send(error)
+    return res.send(error);
   }
-return res.send('CREATED CATEGORY TABLE')
-})
+  return res.send('CREATED CATEGORY TABLE');
+});
 
-
-app.listen(PORT,()=>{
-  console.log(`Port ${PORT}`)
-})
+app.listen(PORT, () => {
+  console.log(`Port ${PORT}`);
+});
